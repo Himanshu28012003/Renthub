@@ -1,87 +1,67 @@
-# RentHub - Apartment Rental Listing App
+# RentHub – Apartment Rental Listing App
 
-RentHub is an Angular-based rental property application where users can browse apartments, search properties, save favourites, post rental listings, and manage their own properties.
+RentHub is an Angular-based application that allows users to browse, search, save, and manage rental properties.
 
 ## Features
 
-- **Home Page:** Browse available apartments and featured listings.
-- **Search and Filter:** Search by apartment title, city, and address; filter by maximum rent.
-- **Sorting:** Sort listings by newest, rent (low to high or high to low), and area.
-- **Pagination:** Navigate through apartment listings page by page.
-- **Featured Carousel:** Browse featured properties using navigation arrows.
-- **User Authentication:** Register, log in, and log out.
-- **Favourites:** Add or remove properties from favourites.
-- **Apartment Details:** View detailed information about a property.
-- **Post Property:** Submit property information, amenities, contact details, and an image.
-- **Property Preview:** Preview listing information before submission.
-- **User Profile:** View your posted properties and delete your listings.
+- **Home Page:** Browse available and featured apartments.
+- **Search & Filter:** Search by title, city, or address and filter by maximum rent.
+- **Sorting & Pagination:** Sort listings by rent, area, or newest and navigate through pages.
+- **Featured Carousel:** Explore highlighted properties using navigation arrows.
+- **Authentication:** Register, log in, and log out.
+- **Favourites:** Save or remove favourite apartments.
+- **Apartment Details:** View detailed property information.
+- **Post Property:** Add property details, amenities, contact information, and images.
+- **Property Preview (Bonus):** Review property details before submission.
+- **Submit Property (Bonus):** Validate and save a property listing.
+- **User Profile:** View and delete your posted properties.
 
 ## Technologies Used
 
-- Angular
-- TypeScript
-- HTML5
-- CSS3
-- Angular Router
-- FormsModule
+- Angular and TypeScript
+- HTML5 and CSS3
+- Angular Router and FormsModule
 - Browser LocalStorage
 
-## Prerequisites
+## Installation
 
-Install Node.js and npm before running the project.
+```bash
+git clone <your-repository-url>
+cd RentHub
+npm install
+npx ng serve
+```
 
-Check the installed versions:
-
-    node --version
-    npm --version
-
-## Installation and Setup
-
-1. Clone the repository:
-
-       git clone <your-repository-url>
-
-2. Navigate to the project folder:
-
-       cd RentHub
-
-3. Install dependencies:
-
-       npm install
-
-4. Start the Angular development server:
-
-       ng serve
-
-5. Open the application in your browser:
-
-       http://localhost:4200
-
-If Angular CLI is not installed globally, use:
-
-    npx ng serve
+Open http://localhost:4200 in your browser.
 
 ## Build
 
-Generate a production build:
-
-    ng build
+```bash
+npx ng build
+```
 
 ## Data Storage
 
-The current version uses browser LocalStorage to store posted properties, favourites, and login-related data.
-
-Data is stored locally in the browser and is not shared across devices.
+LocalStorage stores property listings, favourites, and login-related data. Data remains in the current browser and is not synchronized across devices.
 
 ## Security Note
 
-This is a frontend project. LocalStorage-based authentication and ownership checks are suitable for a demo but are not secure for production. A production application should use a backend API, database, and server-side authentication and authorization.
+This is a frontend demonstration project. Production use requires a backend API, database, secure authentication, and server-side authorization.
 
 ## Future Improvements
 
-- Backend API and database integration
+- Backend and database integration
 - Secure authentication and route guards
-- Edit existing property listings
-- Owner-controlled featured listings
-- Unit and integration tests
-- Application deployment
+- Edit property listings
+- Automated testing
+- Deployment
+
+## Github link
+- https://github.com/Himanshu28012003/Renthub.git
+
+## Deployed link
+- https://renthub-ashy.vercel.app/
+
+## User Credentials
+- a@gmail.com
+- 1234567

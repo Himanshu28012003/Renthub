@@ -1,5 +1,7 @@
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Navbar } from './navbar';
+import { provideRouter } from '@angular/router';
 
 describe('Navbar', () => {
   let component: Navbar;
@@ -8,14 +10,20 @@ describe('Navbar', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Navbar],
+      providers: [provideRouter([])]
     }).compileComponents();
 
     fixture = TestBed.createComponent(Navbar);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the navbar component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render navigation links', () => {
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelector('a')).toBeTruthy();
   });
 });
