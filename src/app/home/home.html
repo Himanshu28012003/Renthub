@@ -1,0 +1,244 @@
+
+<section class="hero">
+  <p class="eyebrow">WELCOME TO RENTHUB</p>
+  <h1>Find a place you'll love to live.</h1>
+  <p>Discover apartments that match your budget and lifestyle.</p>
+</section>
+
+<!-- Search and filters -->
+<section class="search-panel">
+  <input
+    type="text"
+    [(ngModel)]="search"
+    (ngModelChange)="updateFilters()"
+    placeholder="Search by city, area or apartment"
+  />
+
+  <input
+    type="number"
+    [(ngModel)]="maxRent"
+    (ngModelChange)="updateFilters()"
+    placeholder="Maximum monthly rent"
+    min="1"
+  />
+
+  <button
+    type="button"
+    (click)="showFavourites = !showFavourites; updateFilters()"
+  >
+    {{ showFavourites ? 'Show All' : '♥ Favourites' }}
+  </button>
+</section>
+
+<!-- Featured carousel -->
+@if (featuredApartments.length > 0 && !showFavourites) {
+  <section class="featured-section">
+    <div class="featured-image-container">
+      <img
+        class="featured-image"
+        [src]="currentFeaturedApartment.image"
+        [alt]="currentFeaturedApartment.title"
+      />
+
+      <button
+        type="button"
+        class="carousel-arrow previous-arrow"
+        aria-label="Previous featured property"
+        (click)="previousFeatured()"
+      >
+        &#10094;
+      </button>
+
+      <button
+        type="button"
+        class="carousel-arrow next-arrow"
+        aria-label="Next featured property"
+        (click)="nextFeatured()"
+      >
+        &#10095;
+      </button>
+
+      <span class="featured-badge">Featured Listing</span>
+    </div>
+
+    <div class="featured-info">
+      <p class="eyebrow">FEATURED LISTING</p>
+
+      <h2>{{ currentFeaturedApartment.title }}</h2>
+
+      <p class="featured-location">
+        {{ currentFeaturedApartment.address }},
+        {{ currentFeaturedApartment.city }}
+      </p>
+
+      <p class="featured-description">
+        {{ currentFeaturedApartment.description }}
+      </p>
+
+      <h3>
+        ₹{{ currentFeaturedApartment.rent | number }}
+        <small>/ month</small>
+      </h3>
+
+      <div class="featured-actions">
+        <a
+          class="details-button"
+          [routerLink]="['/apartment', currentFeaturedApartment.id]"
+        >
+          View Details
+        </a>
+
+        <button
+          type="button"
+          class="favourite-action"
+          (click)="toggleFavourite(currentFeaturedApartment.id)"
+        >
+          {{
+            favourites.includes(currentFeaturedApartment.id)
+              ? '♥ Favourited'
+              : '♡ Mark as Favourite'
+          }}
+        </button>
+      </div>
+
+      <div class="carousel-indicators">
+        @for (apartment of featuredApartments; track apartment.id; let i = $index) {
+          <button
+            type="button"
+            [class.active]="i === carouselIndex"
+            [attr.aria-label]="'Show featured listing ' + (i + 1)"
+            (click)="carouselIndex = i"
+          ></button>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<!-- All listings -->
+<div class="section-heading">
+  <div>
+    <h2>
+      {{ showFavourites ? 'Your Favourites' : 'All Listings' }}
+    </h2>
+    <p>{{ filteredApartments.length }} properties found</p>
+  </div>
+
+  <div class="sort-control">
+    <label for="sortBy">Sort by:</label>
+
+    <select
+      id="sortBy"
+      [(ngModel)]="sortBy"
+      (ngModelChange)="updateFilters()"
+    >
+      <option value="newest">Newest First</option>
+      <option value="rentLow">Rent: Low to High</option>
+      <option value="rentHigh">Rent: High to Low</option>
+      <option value="areaHigh">Largest Area</option>
+    </select>
+  </div>
+</div>
+
+<div class="apartment-grid">
+  @for (apartment of paginatedApartments; track apartment.id) {
+    <article class="apartment-card">
+      <div class="image-container">
+        <img
+          [src]="apartment.image"
+          [alt]="apartment.title"
+          loading="lazy"
+        />
+
+        <button
+          type="button"
+          class="heart"
+          (click)="toggleFavourite(apartment.id)"
+          [attr.aria-label]="'Toggle favourite for ' + apartment.title"
+        >
+          {{ favourites.includes(apartment.id) ? '♥' : '♡' }}
+        </button>
+      </div>
+
+      <div class="card-content">
+        <p class="location">
+          {{ apartment.address }}, {{ apartment.city }}
+        </p>
+
+        <h3>{{ apartment.title }}</h3>
+
+        <p class="area">{{ apartment.area }} sq. ft.</p>
+
+        <h3 class="rent">
+          ₹{{ apartment.rent | number }}
+          <small>/ month</small>
+        </h3>
+
+        <div class="card-actions">
+          <a
+            class="details-button"
+            [routerLink]="['/apartment', apartment.id]"
+          >
+            View Details
+          </a>
+
+          <button
+            type="button"
+            class="favourite-action"
+            (click)="toggleFavourite(apartment.id)"
+          >
+            {{
+              favourites.includes(apartment.id)
+                ? '♥ Favourited'
+                : '♡ Favourite'
+            }}
+          </button>
+        </div>
+      </div>
+    </article>
+  } @empty {
+    <div class="empty-state">
+      <h3>No apartments found</h3>
+      <p>Try another location or adjust your rent filter.</p>
+
+      <button
+        type="button"
+        (click)="search = ''; maxRent = null; showFavourites = false; updateFilters()"
+      >
+        Clear Filters
+      </button>
+    </div>
+  }
+</div>
+
+<!-- Pagination -->
+@if (filteredApartments.length > 0 && totalPages > 1) {
+  <nav class="pagination" aria-label="Listing pages">
+    <button
+      type="button"
+      [disabled]="currentPage === 1"
+      (click)="changePage(currentPage - 1)"
+    >
+      Previous
+    </button>
+
+    @for (page of pages; track page) {
+      <button
+        type="button"
+        [class.current-page]="currentPage === page"
+        [attr.aria-current]="currentPage === page ? 'page' : null"
+        (click)="changePage(page)"
+      >
+        {{ page }}
+      </button>
+    }
+
+    <button
+      type="button"
+      [disabled]="currentPage === totalPages"
+      (click)="changePage(currentPage + 1)"
+    >
+      Next
+    </button>
+  </nav>
+}

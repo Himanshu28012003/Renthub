@@ -1,0 +1,132 @@
+@if (apartment) {
+  <div class="details-page">
+
+    <a routerLink="/" class="back-link">← Back to Home</a>
+
+    <div class="details-card">
+
+      <img
+        class="property-image"
+        [src]="apartment.image"
+        [alt]="apartment.title"
+      />
+
+      <div class="property-content">
+
+        <div class="property-heading">
+          <div>
+            <h1>{{ apartment.title }}</h1>
+            <p>{{ apartment.address }}, {{ apartment.city }}</p>
+          </div>
+
+          <button
+            class="favourite-btn"
+            type="button"
+            (click)="toggleFavourite()"
+          >
+            {{ isFavourite ? '♥ Saved' : '♡ Favourite' }}
+          </button>
+        </div>
+
+        <h2 class="rent">
+          ₹{{ apartment.rent }} <span>/ month</span>
+        </h2>
+
+        <p class="area">
+          Area: {{ apartment.area || 'Not specified' }} sq. ft.
+        </p>
+
+        <h3>About this property</h3>
+        <p>{{ apartment.description || 'No description available.' }}</p>
+
+        <h3>Amenities</h3>
+
+        <div class="amenities">
+          @for (amenity of apartment.amenities || []; track amenity) {
+            <span>{{ amenity }}</span>
+          } @empty {
+            <p>No amenities listed.</p>
+          }
+        </div>
+
+        <button
+          class="interest-btn"
+          type="button"
+          (click)="expressInterest()"
+          [disabled]="interestSent"
+        >
+          {{ interestSent ? 'Interest Sent ✓' : 'I am Interested' }}
+        </button>
+
+      </div>
+    </div>
+
+    <section class="comments-section">
+
+      <h2>Questions and Comments</h2>
+
+      <form (ngSubmit)="addComment()">
+        <textarea
+          name="commentText"
+          [(ngModel)]="commentText"
+          placeholder="Ask a question about this property..."
+          rows="3"
+          required
+        ></textarea>
+
+        <button type="submit">Post Comment</button>
+      </form>
+
+      @for (comment of comments; track comment.id) {
+        <div class="comment-card">
+
+          <strong>{{ comment.author }}</strong>
+          <p>{{ comment.text }}</p>
+
+          <button
+            class="reply-button"
+            type="button"
+            (click)="startReply(comment.id)"
+          >
+            Reply
+          </button>
+
+          @for (reply of comment.replies; track reply.id) {
+            <div class="reply-card">
+              <strong>{{ reply.author }}</strong>
+              <p>{{ reply.text }}</p>
+            </div>
+          }
+
+          @if (replyingTo === comment.id) {
+            <form
+              class="reply-form"
+              (ngSubmit)="addReply(comment.id)"
+            >
+              <textarea
+                name="replyText"
+                [(ngModel)]="replyText"
+                placeholder="Write your reply..."
+                rows="2"
+                required
+              ></textarea>
+
+              <button type="submit">Submit Reply</button>
+            </form>
+          }
+
+        </div>
+      } @empty {
+        <p class="no-comments">
+          No comments yet. Be the first to ask a question!
+        </p>
+      }
+
+    </section>
+  </div>
+} @else {
+  <div class="not-found">
+    <h2>Property not found</h2>
+    <a routerLink="/">Return to Home</a>
+  </div>
+}

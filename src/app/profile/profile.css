@@ -1,0 +1,285 @@
+
+:host {
+  display: block;
+  color: #222;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.profile-page {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 25px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.profile-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.profile-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.eyebrow {
+  margin: 0 0 7px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.profile-info h1 {
+  margin: 0 0 7px;
+  font-size: 25px;
+  overflow-wrap: anywhere;
+}
+
+.profile-info > p:last-child {
+  margin: 0;
+  color: #6b7280;
+  overflow-wrap: anywhere;
+}
+
+.add-listing-button,
+.view-button,
+.delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.add-listing-button {
+  background: #2563eb;
+  color: white;
+  white-space: nowrap;
+}
+
+.add-listing-button:hover,
+.view-button:hover {
+  background: #1d4ed8;
+}
+
+.my-listings-section {
+  margin-top: 35px;
+}
+
+.listings-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.listings-heading h2 {
+  margin: 0 0 7px;
+  font-size: 26px;
+}
+
+.listings-heading p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.listing-count {
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.my-listings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.listing-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.listing-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px #0000000d;
+}
+
+.listing-image-container {
+  background: #f3f4f6;
+}
+
+.listing-image-container img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.listing-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.listing-content h3 {
+  margin: 0 0 9px;
+  font-size: 18px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.listing-location,
+.listing-area {
+  margin: 0 0 10px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.listing-rent {
+  margin: auto 0 16px;
+  padding-top: 5px;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.listing-rent small {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.listing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.view-button {
+  flex: 1;
+  background: #2563eb;
+  color: white;
+}
+
+.delete-button {
+  flex: 1;
+  border-color: #fecaca;
+  background: #fff;
+  color: #dc2626;
+}
+
+.delete-button:hover {
+  background: #fef2f2;
+}
+
+.empty-state {
+  padding: 50px 20px;
+  border: 1px dashed #d1d5db;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.empty-icon {
+  margin-bottom: 12px;
+  color: #2563eb;
+  font-size: 42px;
+}
+
+.empty-state h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.empty-state p {
+  margin: 0 0 20px;
+  color: #6b7280;
+}
+
+@media (max-width: 900px) {
+  .my-listings-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 18px 14px;
+  }
+
+  .profile-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 18px;
+  }
+
+  .profile-avatar {
+    width: 58px;
+    height: 58px;
+    font-size: 24px;
+  }
+
+  .profile-info {
+    flex-basis: calc(100% - 80px);
+  }
+
+  .profile-info h1 {
+    font-size: 21px;
+  }
+
+  .profile-header > .add-listing-button {
+    width: 100%;
+  }
+
+  .listings-heading h2 {
+    font-size: 23px;
+  }
+
+  .my-listings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .listing-image-container img {
+    height: 220px;
+  }
+}

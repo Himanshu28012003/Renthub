@@ -1,0 +1,178 @@
+.details-page {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #166534;
+  text-decoration: none;
+}
+
+.details-card {
+  overflow: hidden;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.property-image {
+  display: block;
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+}
+
+.property-content {
+  padding: 28px;
+}
+
+.property-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.property-heading h1 {
+  margin-top: 0;
+}
+
+.property-heading p {
+  color: #666;
+}
+
+.rent {
+  color: #166534;
+  font-size: 28px;
+}
+
+.rent span {
+  color: #777;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.area {
+  color: #555;
+}
+
+.amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.amenities span {
+  padding: 8px 13px;
+  background: #ecfdf5;
+  color: #166534;
+  border-radius: 20px;
+}
+
+.favourite-btn,
+.interest-btn,
+.comments-section button {
+  padding: 11px 16px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.favourite-btn {
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.interest-btn,
+.comments-section form button {
+  background: #15803d;
+  color: white;
+}
+
+.interest-btn:disabled {
+  background: #9ca3af;
+  cursor: default;
+}
+
+.comments-section {
+  margin-top: 35px;
+}
+
+.comments-section > form,
+.reply-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.comments-section textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+  resize: vertical;
+}
+
+.comment-card {
+  margin-bottom: 15px;
+  padding: 18px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.comment-card p,
+.reply-card p {
+  overflow-wrap: anywhere;
+}
+
+.reply-button {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.reply-card {
+  margin: 12px 0 0 20px;
+  padding: 12px;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.reply-form {
+  margin: 15px 0 0 20px;
+}
+
+.no-comments {
+  color: #777;
+}
+
+.not-found {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .details-page {
+    padding: 14px;
+  }
+
+  .property-image {
+    height: 240px;
+  }
+
+  .property-content {
+    padding: 18px;
+  }
+
+  .property-heading {
+    flex-direction: column;
+  }
+}

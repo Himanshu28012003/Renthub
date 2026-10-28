@@ -1,0 +1,410 @@
+
+<div class="form-container">
+
+  @if (!showPreview) {
+    <h1>Create New Post</h1>
+    <p class="subtitle">
+      Enter property information, contact details, and rental preferences.
+    </p>
+
+    <form #propertyForm="ngForm" (ngSubmit)="previewProperty()">
+
+      <section class="form-section">
+        <h2>Choose your Apartment/Building</h2>
+
+        <div class="form-row">
+          <div>
+            <label for="propertyType">Property Type *</label>
+            <select
+              id="propertyType"
+              name="propertyType"
+              [(ngModel)]="propertyType"
+              required>
+              <option value="">Select an option</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Independent House">Independent House</option>
+              <option value="Villa">Villa</option>
+              <option value="Building">Building</option>
+              <option value="Studio">Studio</option>
+              <option value="Room">Room</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="propertyName">Name of Property *</label>
+            <input
+              id="propertyName"
+              name="propertyName"
+              [(ngModel)]="propertyName"
+              placeholder="Enter property name"
+              required />
+          </div>
+        </div>
+
+        <label>Is this a shared property?</label>
+        <div class="radio-group">
+          <label>
+            <input
+              type="radio"
+              name="sharedProperty"
+              [(ngModel)]="sharedProperty"
+              value="Yes" />
+            Yes
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="sharedProperty"
+              [(ngModel)]="sharedProperty"
+              value="No" />
+            No
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>Property Location</h2>
+
+        <label for="address">Street Address *</label>
+        <input
+          id="address"
+          name="address"
+          [(ngModel)]="address"
+          placeholder="Enter street address"
+          required />
+
+        <label for="city">City *</label>
+        <input
+          id="city"
+          name="city"
+          [(ngModel)]="city"
+          placeholder="Enter city"
+          required />
+      </section>
+
+      <section class="form-section">
+        <h2>Property Details</h2>
+
+        <div class="form-row">
+          <div>
+            <label for="area">Square Feet *</label>
+            <input
+              id="area"
+              type="number"
+              name="area"
+              [(ngModel)]="area"
+              min="1"
+              placeholder="Enter area in square feet"
+              required />
+          </div>
+
+          <div>
+            <label>Stay / Lease Type *</label>
+            <div class="radio-group">
+              <label>
+                <input
+                  type="radio"
+                  name="leaseType"
+                  [(ngModel)]="leaseType"
+                  value="Long term" />
+                Long term (6+ months)
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="leaseType"
+                  [(ngModel)]="leaseType"
+                  value="Short term" />
+                Short term
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="leaseType"
+                  [(ngModel)]="leaseType"
+                  value="Both" />
+                Both
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label for="rent">Expected Rent (₹) *</label>
+            <input
+              id="rent"
+              type="number"
+              name="rent"
+              [(ngModel)]="rent"
+              min="1"
+              placeholder="Enter expected rent"
+              required />
+          </div>
+
+          <div>
+            <label class="checkbox-option">
+              <input
+                type="checkbox"
+                name="negotiable"
+                [(ngModel)]="negotiable" />
+              Negotiable
+            </label>
+
+            <label>Price Mode</label>
+            <div class="radio-group">
+              <label>
+                <input
+                  type="radio"
+                  name="priceMode"
+                  [(ngModel)]="priceMode"
+                  value="Per Month" />
+                Per Month
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="priceMode"
+                  [(ngModel)]="priceMode"
+                  value="Utilities included in rent" />
+                Utilities included in rent
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>Is the room/apartment furnished?</h2>
+
+        <div class="radio-group">
+          <label>
+            <input
+              type="radio"
+              name="furnished"
+              [(ngModel)]="furnished"
+              value="Yes" />
+            Yes
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="furnished"
+              [(ngModel)]="furnished"
+              value="No" />
+            No
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>Amenities included</h2>
+
+        <div class="amenities-grid">
+          @for (amenity of availableAmenities; track amenity) {
+            <label class="amenity-option">
+              <input
+                type="checkbox"
+                [checked]="selectedAmenities.includes(amenity)"
+                (change)="toggleAmenity(
+                  amenity,
+                  $any($event.target).checked
+                )" />
+              {{ amenity }}
+            </label>
+          }
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>Description</h2>
+
+        <label for="title">Title *</label>
+        <input
+          id="title"
+          name="title"
+          [(ngModel)]="title"
+          maxlength="100"
+          placeholder="Enter your advertisement title"
+          required />
+
+        <label for="description">Description *</label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+          maxlength="1400"
+          rows="5"
+          placeholder="Enter a detailed description"
+          required></textarea>
+
+        <small>{{ description.length }}/1400 characters</small>
+      </section>
+
+      <section class="form-section">
+        <h2>Vegetarian Preference</h2>
+
+        <div class="radio-group">
+          <label>
+            <input
+              type="radio"
+              name="vegetarianPreference"
+              [(ngModel)]="vegetarianPreference"
+              value="Vegetarian only" />
+            Vegetarian only
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="vegetarianPreference"
+              [(ngModel)]="vegetarianPreference"
+              value="No preference" />
+            No preference
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>Contact Information</h2>
+
+        <label for="contactName">Contact Name *</label>
+        <input
+          id="contactName"
+          name="contactName"
+          [(ngModel)]="contactName"
+          placeholder="Enter contact name"
+          required />
+
+        <label for="contactPhone">Contact Number *</label>
+        <input
+          id="contactPhone"
+          type="tel"
+          name="contactPhone"
+          [(ngModel)]="contactPhone"
+          pattern="[0-9]{10}"
+          maxlength="10"
+          placeholder="Enter 10-digit mobile number"
+          required />
+      </section>
+
+      <section class="form-section">
+        <h2>Upload Apartment Image *</h2>
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onImageSelected($event)" />
+
+        @if (imagePreview) {
+          <div class="image-preview">
+            <img [src]="imagePreview" alt="Selected apartment" />
+          </div>
+        }
+      </section>
+
+      <button type="submit" class="primary-btn">
+        Preview Property
+      </button>
+
+    </form>
+
+  } @else {
+    <div class="property-preview">
+
+      <h1 class="preview-heading">Preview and Submit</h1>
+
+      <div class="preview-details-grid">
+
+        <div class="preview-detail-card">
+          <h3>Property Type</h3>
+          <p>{{ propertyType }}</p>
+        </div>
+
+        <div class="preview-detail-card">
+          <h3>Property Name</h3>
+          <p>{{ propertyName }}</p>
+        </div>
+
+        <div class="preview-detail-card">
+          <h3>Address</h3>
+          <p>{{ address }}, {{ city }}</p>
+        </div>
+
+        <div class="preview-detail-card">
+          <h3>Rent</h3>
+          <p>
+            ₹{{ rent }}
+            {{ priceMode === 'Per Month' ? '/month' : '' }}
+          </p>
+          <p>{{ negotiable ? 'Negotiable' : 'Non-negotiable' }}</p>
+        </div>
+
+        <div class="preview-detail-card">
+          <h3>Description</h3>
+          <p>{{ description }}</p>
+        </div>
+
+        <div class="preview-detail-card">
+          <h3>Property Details</h3>
+          <p>Area: {{ area }} sq. ft.</p>
+          <p>Lease: {{ leaseType }}</p>
+          <p>Furnished: {{ furnished }}</p>
+          <p>Shared property: {{ sharedProperty }}</p>
+          <p>Vegetarian preference: {{ vegetarianPreference }}</p>
+        </div>
+
+        <div class="preview-detail-card amenities-card">
+          <h3>Amenities</h3>
+
+          <div class="amenities-list">
+            @for (amenity of selectedAmenities; track amenity) {
+              <p>{{ amenity }}</p>
+            } @empty {
+              <p>No amenities selected</p>
+            }
+          </div>
+        </div>
+
+        <div class="preview-detail-card contact-card">
+          <h3>Contact Details</h3>
+          <p>{{ contactName }}</p>
+          <p>{{ contactPhone }}</p>
+        </div>
+
+      </div>
+
+      <div class="preview-photos-card">
+        <h3>Photos</h3>
+
+        <div class="preview-photos-grid">
+          @if (imagePreview) {
+            <img [src]="imagePreview" alt="Apartment photo" />
+          } @else {
+            <div class="photo-placeholder">No photo selected</div>
+          }
+
+          <div class="photo-placeholder">Additional photo</div>
+          <div class="photo-placeholder">Additional photo</div>
+        </div>
+      </div>
+
+      <div class="preview-actions">
+        <button
+          type="button"
+          class="secondary-btn"
+          (click)="editProperty()">
+          Edit Details
+        </button>
+
+        <button
+          type="button"
+          class="primary-btn"
+          (click)="submitProperty()">
+          Submit Property
+        </button>
+      </div>
+
+    </div>
+  }
+
+</div>

@@ -1,0 +1,16 @@
+<nav class="navbar">
+  <a routerLink="/" class="logo">RentHub</a>
+
+  <div class="nav-links">
+    <a routerLink="/">Home</a>
+
+  @if (isLoggedIn()) {
+  <a routerLink="/add-apartment">Post Property</a>
+  <a routerLink="/profile">Profile</a>
+  <button type="button" (click)="logout()">Logout</button>
+} @else {
+  <a routerLink="/login">Login</a>
+  <a routerLink="/register">Signup</a>
+}
+  </div>
+</nav>
