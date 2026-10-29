@@ -4,7 +4,7 @@
   <div class="nav-links">
     <a routerLink="/">Home</a>
 
-  @if (isLoggedIn()) {
+  @if (isLoggedIn) {
   <a routerLink="/add-apartment">Post Property</a>
   <a routerLink="/profile">Profile</a>
   <button type="button" (click)="logout()">Logout</button>
