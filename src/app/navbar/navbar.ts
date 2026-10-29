@@ -1,5 +1,9 @@
-import { Component, signal, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterLink, NavigationEnd } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Router,
+  RouterLink,
+  NavigationEnd
+} from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 
 @Component({
@@ -11,38 +15,39 @@ import { filter, Subscription } from 'rxjs';
 })
 export class Navbar implements OnInit, OnDestroy {
 
-  isLoggedIn = signal(
-    localStorage.getItem('isLoggedIn') === 'true'
-  );
+  isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   private routerSubscription?: Subscription;
 
   constructor(private router: Router) {}
 
   ngOnInit() {
+    // Listen for login changes
+    window.addEventListener('authChanged', this.updateLoginStatus);
+
+    // Recheck login status after navigation
     this.routerSubscription = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.checkLoginStatus();
+        this.updateLoginStatus();
       });
 
-    window.addEventListener('authChanged', this.checkLoginStatus);
+    this.updateLoginStatus();
   }
 
-  checkLoginStatus = () => {
-    this.isLoggedIn.set(
-      localStorage.getItem('isLoggedIn') === 'true'
-    );
+  updateLoginStatus = () => {
+    this.isLoggedIn =
+      localStorage.getItem('isLoggedIn') === 'true';
   };
 
   ngOnDestroy() {
+    window.removeEventListener('authChanged', this.updateLoginStatus);
     this.routerSubscription?.unsubscribe();
-    window.removeEventListener('authChanged', this.checkLoginStatus);
   }
 
   logout() {
     localStorage.removeItem('isLoggedIn');
-    this.checkLoginStatus();
+    this.updateLoginStatus();
     this.router.navigate(['/login']);
   }
 }

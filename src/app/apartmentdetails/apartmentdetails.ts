@@ -119,29 +119,8 @@ export class ApartmentDetails {
     );
   }
 
-  expressInterest() {
-    if (localStorage.getItem('isLoggedIn') !== 'true') {
-      alert('Please login to express interest.');
-      return;
-    }
+  
 
-    let interests: number[] = JSON.parse(
-      localStorage.getItem('renthub-interests') || '[]'
-    );
-
-    if (!interests.includes(this.apartment.id)) {
-      interests.push(this.apartment.id);
-
-      localStorage.setItem(
-        'renthub-interests',
-        JSON.stringify(interests)
-      );
-    }
-
-    this.interestSent = true;
-
-    alert('Your interest has been recorded.');
-  }
 
   addComment() {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
