@@ -15,30 +15,53 @@ export class Login {
   email = '';
   password = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
-  login() {
-    const savedUser = localStorage.getItem('user');
+  
+login() {
+  // 1. Check required fields
+  if (!this.email.trim() || !this.password) {
+    alert('Please enter both email and password.');
+    return;
+  }
 
-    if (!savedUser) {
-      alert('Please sign up first');
+  
+
+  
+
+  // 3. Check whether a user exists
+  const savedUser = localStorage.getItem('user');
+
+  if (!savedUser) {
+    alert('Please sign up first.');
+    return;
+  }
+
+  try {
+   
+    const user = JSON.parse(savedUser);
+
+    if (!user || typeof user !== 'object') {
+      alert('Invalid saved user data. Please sign up again.');
       return;
     }
 
-    const user = JSON.parse(savedUser);
-
+   
     if (
-      user.email === this.email &&
+      typeof user.email === 'string' &&
+      typeof user.password === 'string' &&
+      user.email.toLowerCase() === this.email.trim().toLowerCase() &&
       user.password === this.password
     ) {
       localStorage.setItem('isLoggedIn', 'true');
-
-      // Notify the Navbar immediately
       window.dispatchEvent(new Event('authChanged'));
-
       this.router.navigate(['/']);
     } else {
-      alert('Invalid email or password');
+      alert('Invalid email or password.');
     }
+  } catch {
+    alert('Unable to read saved user data. Please sign up again.');
   }
+}
+
 }

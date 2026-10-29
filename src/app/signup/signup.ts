@@ -17,22 +17,55 @@ export class Signup {
 
   constructor(private router: Router) {}
 
-  signup() {
-    if (!this.name || !this.email || !this.password) {
-      alert('Please fill all fields');
+  
+signup() {
+  try {
+    const name = this.name.trim();
+    const email = this.email.trim().toLowerCase();
+    const password = this.password;
+
+    // 1. Required field validation
+    if (!name || !email || !password) {
+      alert('Please fill all fields.');
       return;
     }
 
-    const user = {
-      name: this.name,
-      email: this.email,
-      password: this.password
-    };
+    
+  
+
+    // 4. Password length validation
+    if (password.length < 8) {
+      alert('Password must be at least 8 characters long.');
+      return;
+    }
+
+   
+    // 6. Check existing user
+    const savedUser = localStorage.getItem('user');
+
+    if (savedUser) {
+      const existingUser = JSON.parse(savedUser);
+
+      if (
+        typeof existingUser.email === 'string' &&
+        existingUser.email.toLowerCase() === email
+      ) {
+        alert('Email already registered. Please login.');
+        return;
+      }
+    }
+
+    // 7. Save user
+    const user = { name, email, password };
 
     localStorage.setItem('user', JSON.stringify(user));
 
     alert('Registration successful. Please login.');
-
     this.router.navigate(['/login']);
+
+  } catch (error) {
+    console.error('Signup error:', error);
+    alert('Something went wrong. Please try again.');
   }
+}
 }
